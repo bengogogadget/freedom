@@ -10,23 +10,23 @@ using Microsoft.AspNetCore.Mvc;
 namespace freedom.exchange.api.Controllers
 {
     [Route("api/message")]
-    public class MessageController(ICreateMessage sendMessages, IGetUserMessages getUserMessage) : FeController
+    public class MessageAsyncController(ICreateMessage sendMessages, IGetUserMessages getUserMessage) : FeController
     {
         [HttpPost]
-        public CreateUserMessageResponse Post([FromBody] CreateUserMessageRequest request)
+        public async Task<CreateUserMessageResponse> Post([FromBody] CreateUserMessageRequest request)
         {
             return new CreateUserMessageResponse
             {
-                MessageId = sendMessages.Execute(request)
+                MessageId = await sendMessages.ExecuteAsync(request)
             };
         }
 
         [HttpGet]
-        public GetUserMessagesResponse Get(GetUserMessagesRequest request)
+        public async Task<GetUserMessagesResponse> Get(GetUserMessagesRequest request)
         {
             return new GetUserMessagesResponse
             {
-                Messages = getUserMessage.Query(request) ?? Enumerable.Empty<UserMessage>()
+                Messages = await getUserMessage.QueryAsync(request) ?? Enumerable.Empty<UserMessage>()
             };
         }
     }

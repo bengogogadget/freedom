@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace freedom.exchange.api.Controllers
 {
     [Route("/api/user_messaging_group")]
-    public class UserMessagingGroupController(IGetUserMessagingGroups getUserMessagingGroups) : FeController
+    public class UserMessagingGroupAsyncController(IGetUserMessagingGroups getUserMessagingGroups) : FeController
     {
         [HttpGet]
-        public GetUserMessagingGroupsResponse Get(GetUserMessagingGroupsRequest request)
+        public async Task<GetUserMessagingGroupsResponse> Get(GetUserMessagingGroupsRequest request)
         {
             return new GetUserMessagingGroupsResponse
             {
-                MessagingGroups = getUserMessagingGroups.Execute(request)
+                MessagingGroups = await getUserMessagingGroups.ExecuteAsync(request)
             };
         }
     }

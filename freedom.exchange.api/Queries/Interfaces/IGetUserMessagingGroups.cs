@@ -5,6 +5,6 @@ namespace freedom.exchange.api.Queries.Interfaces
 {
     public interface IGetUserMessagingGroups
     {
-        public IEnumerable<UserMessageGroup> Execute(GetUserMessagingGroupsRequest request);
+        public Task<IEnumerable<UserMessageGroup>> ExecuteAsync(GetUserMessagingGroupsRequest request);
     }
 }

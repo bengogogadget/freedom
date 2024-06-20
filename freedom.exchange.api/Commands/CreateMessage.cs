@@ -9,7 +9,7 @@ namespace freedom.exchange.api.Commands
 {
     public class CreateMessage(ISqlConnectionFactory connectionFactory, IDateTimeProvider dateTimeProvider, IUuidGenerator uuidGenerator) : SqlAccessor(connectionFactory), ICreateMessage
     {
-        public string Execute(CreateUserMessageRequest request)
+        public async Task<string> ExecuteAsync(CreateUserMessageRequest request)
         {
             string messageId = uuidGenerator.GenerateUuid();
 
@@ -25,7 +25,7 @@ WHERE messaging_group_id = @MessagingGroupId",
                         request.MessagingGroupId
                     });
 
-                result = db.Execute(@"INSERT INTO dbo.message ( id, message, utc_sent, sender_id, messaging_group_id ) VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
+                result = await db.ExecuteAsync(@"INSERT INTO dbo.message ( id, message, utc_sent, sender_id, messaging_group_id ) VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
                     new {
                         Id = messageId,
                         request.EncryptedMessage,
@@ -34,17 +34,20 @@ WHERE messaging_group_id = @MessagingGroupId",
                         request.MessagingGroupId
                     });
 
+                var executions = new List<Task<int>>();
                 foreach (var userId in userIdsAsync.Result)
                 {
-                    db.Execute(@"INSERT INTO dbo.user_message ( id, user_id, message_id, messaging_group_id ) VALUES ( @Id, @UserId, @MessageId, @MessagingGroupId );",
+                    executions.Add(db.ExecuteAsync(@"INSERT INTO dbo.user_message ( id, user_id, message_id, messaging_group_id ) VALUES ( @Id, @UserId, @MessageId, @MessagingGroupId );",
                         new
                         {
                             Id = uuidGenerator.GenerateUuid(),
                             UserId = userId,
                             MessageId = messageId,
                             request.MessagingGroupId
-                        });
+                        }));
                 }
+
+                Task.WaitAll(executions.ToArray());
             }
 
             return messageId;

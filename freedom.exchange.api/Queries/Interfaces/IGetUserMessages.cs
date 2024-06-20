@@ -5,6 +5,6 @@ namespace freedom.exchange.api.Queries.Interfaces
 {
     public interface IGetUserMessages
     {
-        IEnumerable<UserMessage> Query(GetUserMessagesRequest request);
+        Task<IEnumerable<UserMessage>> QueryAsync(GetUserMessagesRequest request);
     }
 }

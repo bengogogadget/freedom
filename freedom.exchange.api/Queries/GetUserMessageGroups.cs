@@ -9,11 +9,11 @@ namespace freedom.exchange.api.Queries
 {
     public class GetUserMessageGroups(ISqlConnectionFactory sqlConnectionFactory) : IGetUserMessagingGroups
     {
-        public IEnumerable<UserMessageGroup> Execute(GetUserMessagingGroupsRequest request)
+        public async Task<IEnumerable<UserMessageGroup>> ExecuteAsync(GetUserMessagingGroupsRequest request)
         {
             using (var db = sqlConnectionFactory.Open())
             {
-                return db.Query<UserMessageGroup>(
+                return await db.QueryAsync<UserMessageGroup>(
                     @"SELECT messaging_group_id AS Id, mg.name AS Name, mg.hash AS Hash, utc_removed AS UtcRemoved
 FROM dbo.messaging_group_user mgu
 JOIN dbo.messaging_group mg ON mg.id = mgu.messaging_group_id

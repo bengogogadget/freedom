@@ -5,6 +5,6 @@ namespace freedom.exchange.api.Queries.Interfaces
 {
     public interface IGetMessagingGroupUsers
     {
-        public IDictionary<string, IEnumerable<MessagingGroupUser>> Query(GetMessagingGroupUsersRequest request);
+        public Task<IDictionary<string, IEnumerable<MessagingGroupUser>>> QueryAsync(GetMessagingGroupUsersRequest request);
     }
 }

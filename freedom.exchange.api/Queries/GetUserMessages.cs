@@ -10,12 +10,12 @@ namespace freedom.exchange.api.Queries
 {
     public class GetUserMessages(ISqlConnectionFactory connectionFactory) : SqlAccessor(connectionFactory), IGetUserMessages
     {
-        public IEnumerable<UserMessage> Query(GetUserMessagesRequest request)
+        public async Task<IEnumerable<UserMessage>> QueryAsync(GetUserMessagesRequest request)
         {
             IEnumerable<UserMessage> payload;
             using (var db = GetConnection())
             {
-                var sinceWhen = db.QuerySingleOrDefault<DateTime?>(
+                var sinceWhen = await db.QuerySingleOrDefaultAsync<DateTime?>(
                     @"select m.utc_sent
 from dbo.message m
 join dbo.user_message um on um.message_id = m.id
@@ -26,7 +26,7 @@ where um.user_id = @UserId and um.message_id = @LastMessageId;",
                         request.LastMessageId
                     });
 
-                payload = db.Query<UserMessage>(
+                payload = await db.QueryAsync<UserMessage>(
                     @"SELECT um.id AS Id, um.user_id AS SenderId, um.message_id AS MessageId, um.messaging_group_id AS MessagingGroupId, m.message AS EncryptedMessage, m.utc_sent AS UtcSent, um.utc_deleted AS UtcDeleted
 FROM dbo.message m
 JOIN dbo.user_message um ON um.message_id = m.id

@@ -4,6 +4,6 @@ namespace freedom.exchange.api.Commands.Interfaces
 {
     public interface ICreateMessage
     {
-        string Execute(CreateUserMessageRequest request);
+        Task<string> ExecuteAsync(CreateUserMessageRequest request);
     }
 }

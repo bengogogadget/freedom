@@ -9,25 +9,25 @@ using Microsoft.AspNetCore.Mvc;
 namespace freedom.exchange.api.Controllers
 {
     [Route("api/messaging_group")]
-    public class MessagingGroupController(ICreateMessagingGroup createMessagingGroup, IGetMessagingGroupUsers getMessagingGroupUsers) : FeController
+    public class MessagingGroupAsyncController(ICreateMessagingGroup createMessagingGroup, IGetMessagingGroupUsers getMessagingGroupUsers) : FeController
     {
         [HttpPost]
-        public CreateMessagingGroupResponse Post([FromBody] CreateMessagingGroupRequest request)
+        public async Task<CreateMessagingGroupResponse> Post([FromBody] CreateMessagingGroupRequest request)
         {
             return new CreateMessagingGroupResponse
             {
-                MessagingGroupId = createMessagingGroup.Execute(request)
+                MessagingGroupId = await createMessagingGroup.ExecuteAsync(request)
             };
         }
 
         
 
         [HttpGet]
-        public GetMessagingGroupUsersResponse Get(GetMessagingGroupUsersRequest request)
+        public async Task<GetMessagingGroupUsersResponse> Get(GetMessagingGroupUsersRequest request)
         {
             return new GetMessagingGroupUsersResponse
             {
-                Users = getMessagingGroupUsers.Query(request)
+                Users = await getMessagingGroupUsers.QueryAsync(request)
             };
         }
     }

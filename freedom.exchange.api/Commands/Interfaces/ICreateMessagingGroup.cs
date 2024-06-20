@@ -4,6 +4,6 @@ namespace freedom.exchange.api.Commands.Interfaces
 {
     public interface ICreateMessagingGroup
     {
-        string Execute(CreateMessagingGroupRequest request);
+        Task<string> ExecuteAsync(CreateMessagingGroupRequest request);
     }
 }

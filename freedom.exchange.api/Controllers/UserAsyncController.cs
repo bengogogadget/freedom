@@ -7,14 +7,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace freedom.exchange.api.Controllers
 {
     [Route("api/user")]
-    public class UserController(ICreateUser createUser) : FeController
+    public class UserAsyncController(ICreateUser createUser) : FeController
     {
         [HttpPost]
-        public CreateUserResponse Post([FromBody] CreateUserRequest request)
+        public async Task<CreateUserResponse> Post([FromBody] CreateUserRequest request)
         {
             return new CreateUserResponse
             {
-                UserId = createUser.Execute(request)
+                UserId = await createUser.ExecuteAsync(request)
             };
         }
     }

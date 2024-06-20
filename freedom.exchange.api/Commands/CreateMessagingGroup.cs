@@ -9,13 +9,13 @@ namespace freedom.exchange.api.Commands
 {
     public class CreateMessagingGroup(ISqlConnectionFactory sqlConnectionFactory, IUuidGenerator uuidGenerator, IDateTimeProvider dateTimeProvider) : ICreateMessagingGroup
     {
-        public string Execute(CreateMessagingGroupRequest request)
+        public async Task<string> ExecuteAsync(CreateMessagingGroupRequest request)
         {
             string newMessagingGroupId = uuidGenerator.GenerateUuid();
             string hash = request.UserIds.ToBase64Hash();
             using (var db = sqlConnectionFactory.Open())
             {
-                var existing = db.QuerySingleOrDefault(
+                var existing = await db.QuerySingleOrDefaultAsync(
                     @"SELECT id AS Id FROM dbo.messaging_group WHERE hash = @hash",
                     new
                     {
@@ -27,7 +27,7 @@ namespace freedom.exchange.api.Commands
                     return existing.Id;
                 }
 
-                db.Execute(
+                await db.ExecuteAsync(
                     @"INSERT INTO dbo.messaging_group ( id, name, hash ) VALUES ( @Id, @Name, @Hash);",
                     new
                     {
@@ -36,9 +36,10 @@ namespace freedom.exchange.api.Commands
                         Hash = hash
                     });
 
+                var executions = new List<Task<int>>();
                 foreach (var userId in request.UserIds)
                 {
-                    db.Execute(
+                    executions.Add(db.ExecuteAsync(
                         @"INSERT INTO dbo.messaging_group_user ( id, messaging_group_id, user_id, utc_added ) VALUES ( @Id, @MessagingGroupId, @UserId, @UtcAdded );",
                         new
                         {
@@ -46,11 +47,13 @@ namespace freedom.exchange.api.Commands
                             MessagingGroupId = newMessagingGroupId,
                             UserId = userId,
                             UtcAdded = dateTimeProvider.UtcNow
-                        });
+                        }));
                 }
 
-                return newMessagingGroupId;
+                Task.WaitAll(executions.ToArray());
             }
+
+            return newMessagingGroupId;
         }
     }
 }
