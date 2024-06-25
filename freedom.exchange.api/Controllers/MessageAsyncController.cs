@@ -1,16 +1,14 @@
 ﻿using freedom.exchange.api.Commands.Interfaces;
 using freedom.exchange.api.Dto;
-using freedom.exchange.api.Queries.Interfaces;
 using freedom.exchange.api.Requests;
 using freedom.exchange.api.Responses;
-using freedom.exchange.api.Responses.Models;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace freedom.exchange.api.Controllers
 {
     [Route("api/message")]
-    public class MessageAsyncController(ICreateMessage sendMessages, IGetUserMessages getUserMessage) : FeController
+    public class MessageAsyncController(ICreateMessage sendMessages, IUpdateMessage updateMessage) : FeController
     {
         [HttpPost]
         public async Task<CreateUserMessageResponse> Post([FromBody] CreateUserMessageRequest request)
@@ -21,13 +19,11 @@ namespace freedom.exchange.api.Controllers
             };
         }
 
-        [HttpGet]
-        public async Task<GetUserMessagesResponse> Get(GetUserMessagesRequest request)
+        [HttpPut]
+        public async Task<UpdateMessageResponse> Put([FromBody] UpdateMessageRequest request)
         {
-            return new GetUserMessagesResponse
-            {
-                Messages = await getUserMessage.QueryAsync(request) ?? Enumerable.Empty<UserMessage>()
-            };
+            await updateMessage.ExecuteAsync(request);
+            return new UpdateMessageResponse();
         }
     }
 }

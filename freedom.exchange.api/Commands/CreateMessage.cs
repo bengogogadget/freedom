@@ -19,13 +19,15 @@ namespace freedom.exchange.api.Commands
                 var userIdsAsync = db.QueryAsync<string>(
                     @"SELECT user_id
 FROM dbo.messaging_group_user
-WHERE messaging_group_id = @MessagingGroupId",
+WHERE messaging_group_id = @MessagingGroupId;",
                     new
                     {
                         request.MessagingGroupId
                     });
 
-                result = await db.ExecuteAsync(@"INSERT INTO dbo.message ( id, message, utc_sent, sender_id, messaging_group_id ) VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
+                result = await db.ExecuteAsync(
+                    @"INSERT INTO dbo.message ( id, message, utc_sent, sender_id, messaging_group_id )
+VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
                     new {
                         Id = messageId,
                         request.EncryptedMessage,
@@ -37,7 +39,9 @@ WHERE messaging_group_id = @MessagingGroupId",
                 var executions = new List<Task<int>>();
                 foreach (var userId in userIdsAsync.Result)
                 {
-                    executions.Add(db.ExecuteAsync(@"INSERT INTO dbo.user_message ( id, user_id, message_id, messaging_group_id ) VALUES ( @Id, @UserId, @MessageId, @MessagingGroupId );",
+                    executions.Add(db.ExecuteAsync(
+                        @"INSERT INTO dbo.user_message ( id, user_id, message_id, messaging_group_id )
+VALUES ( @Id, @UserId, @MessageId, @MessagingGroupId );",
                         new
                         {
                             Id = uuidGenerator.GenerateUuid(),

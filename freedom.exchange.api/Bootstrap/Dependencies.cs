@@ -29,6 +29,8 @@ namespace freedom.exchange.api.Bootstrap
             services.AddTransient<ICreateUser, CreateUser>();
             services.AddTransient<ICreateMessagingGroup, CreateMessagingGroup>();
             services.AddTransient<ICreateMessage, CreateMessage>();
+            services.AddTransient<IUpdateMessage, UpdateMessage>();
+            services.AddTransient<IUpdateUserMessage, UpdateUserMessage>();
         }
 
         private static void Queries(IServiceCollection services)

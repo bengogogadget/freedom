@@ -2,9 +2,9 @@
 using freedom.exchange.api.Data;
 using freedom.exchange.api.Queries.Interfaces;
 using freedom.exchange.api.Requests;
+using freedom.exchange.api.Responses.Models;
 
 using Dapper;
-using freedom.exchange.api.Responses.Models;
 
 namespace freedom.exchange.api.Queries
 {
@@ -16,10 +16,10 @@ namespace freedom.exchange.api.Queries
             using (var db = GetConnection())
             {
                 var sinceWhen = await db.QuerySingleOrDefaultAsync<DateTime?>(
-                    @"select m.utc_sent
-from dbo.message m
-join dbo.user_message um on um.message_id = m.id
-where um.user_id = @UserId and um.message_id = @LastMessageId;",
+                    @"SELECT m.utc_sent
+FROM dbo.message m
+JOIN dbo.user_message um on um.message_id = m.id
+WHERE um.user_id = @UserId and um.message_id = @LastMessageId;",
                     new
                     {
                         request.UserId,
@@ -31,7 +31,11 @@ where um.user_id = @UserId and um.message_id = @LastMessageId;",
 FROM dbo.message m
 JOIN dbo.user_message um ON um.message_id = m.id
 JOIN dbo.messaging_group mg ON mg.id = um.messaging_group_id
-WHERE um.user_id = @UserId AND um.messaging_group_id = @MessagingGroupId AND (cast(@sinceWhen as date) IS NULL OR m.utc_sent > @SinceWhen)
+WHERE um.user_id = @UserId
+      AND um.messaging_group_id = @MessagingGroupId
+      AND m.utc_deleted IS NULL
+      AND um.utc_deleted IS NULL
+      AND (cast(@sinceWhen as date) IS NULL OR m.utc_sent > @SinceWhen)
 ORDER BY m.utc_sent DESC;",
                     new
                     {

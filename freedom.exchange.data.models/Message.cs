@@ -26,5 +26,9 @@ namespace freedom.exchange.data.models
         [Required]
         [Column("messaging_group_id")]
         public string MessagingGroupId { get; set; }
+
+        [Required]
+        [Column("utc_deleted")]
+        public DateTime? UtcDeleted { get; set; }
     }
 }

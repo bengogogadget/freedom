@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace freedom.exchange.api.Controllers
 {
-    [Route("/api/user_messaging_group")]
+    [Route("/api/user/message/group")]
     public class UserMessagingGroupAsyncController(IGetUserMessagingGroups getUserMessagingGroups) : FeController
     {
         [HttpGet]

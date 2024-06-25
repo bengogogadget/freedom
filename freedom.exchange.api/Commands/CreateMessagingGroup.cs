@@ -16,7 +16,7 @@ namespace freedom.exchange.api.Commands
             using (var db = sqlConnectionFactory.Open())
             {
                 var existing = await db.QuerySingleOrDefaultAsync(
-                    @"SELECT id AS Id FROM dbo.messaging_group WHERE hash = @hash",
+                    @"SELECT id AS Id FROM dbo.messaging_group WHERE hash = @hash;",
                     new
                     {
                         hash
@@ -28,7 +28,8 @@ namespace freedom.exchange.api.Commands
                 }
 
                 await db.ExecuteAsync(
-                    @"INSERT INTO dbo.messaging_group ( id, name, hash ) VALUES ( @Id, @Name, @Hash);",
+                    @"INSERT INTO dbo.messaging_group ( id, name, hash )
+VALUES ( @Id, @Name, @Hash);",
                     new
                     {
                         Id = newMessagingGroupId,
@@ -40,7 +41,8 @@ namespace freedom.exchange.api.Commands
                 foreach (var userId in request.UserIds)
                 {
                     executions.Add(db.ExecuteAsync(
-                        @"INSERT INTO dbo.messaging_group_user ( id, messaging_group_id, user_id, utc_added ) VALUES ( @Id, @MessagingGroupId, @UserId, @UtcAdded );",
+                        @"INSERT INTO dbo.messaging_group_user ( id, messaging_group_id, user_id, utc_added )
+VALUES ( @Id, @MessagingGroupId, @UserId, @UtcAdded );",
                         new
                         {
                             Id = uuidGenerator.GenerateUuid(),

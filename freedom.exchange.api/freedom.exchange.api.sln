@@ -5,9 +5,9 @@ VisualStudioVersion = 17.9.34622.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freedom.exchange.api", "freedom.exchange.api.csproj", "{C6C34483-D8A7-4772-A4F9-F1AAF08949D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "freedom.exchange.data.models", "..\freedom.exchange.data.models\freedom.exchange.data.models.csproj", "{1ACCC49D-E428-44D1-B2E3-933794B7D714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freedom.exchange.data.models", "..\freedom.exchange.data.models\freedom.exchange.data.models.csproj", "{1ACCC49D-E428-44D1-B2E3-933794B7D714}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bengogogadget.core", "..\bengogogadget.core\bengogogadget.core.csproj", "{088DF531-F7D7-413C-B9C6-EAB08B723244}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bengogogadget.core", "..\bengogogadget.core\bengogogadget.core.csproj", "{088DF531-F7D7-413C-B9C6-EAB08B723244}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
