@@ -35,7 +35,7 @@ namespace freedom.exchange.api.Bootstrap
 
         private static void Queries(IServiceCollection services)
         {
-            services.AddTransient<IGetUserMessagingGroups, GetUserMessageGroups>();
+            services.AddTransient<IGetUserGroups, GetUserGroups>();
             services.AddTransient<IGetMessagingGroupUsers, GetMessageGroupUsers>();
             services.AddTransient<IGetUserMessages, GetUserMessages>();
         }

@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace freedom.exchange.api.Requests
+namespace freedom.exchange.transfer.models.Requests
 {
-    public class GetUserMessagingGroupsRequest
+    public class GetUserGroupsRequest
     {
         [FromQuery]
         public string UserId { get; set; }

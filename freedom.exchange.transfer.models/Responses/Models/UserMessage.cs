@@ -1,4 +1,6 @@
-﻿namespace freedom.exchange.api.Responses.Models
+﻿using System;
+
+namespace freedom.exchange.transfer.models.Responses.Models
 {
     public class UserMessage
     {
@@ -12,7 +14,7 @@
 
         public string SenderId { get; set; }
 
-        public string MessagingGroupId { get; set; }
+        public string GroupId { get; set; }
 
         public DateTime? UtcDeleted { get; set; }
     }

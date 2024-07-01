@@ -1,8 +1,8 @@
 ﻿using bengogogadget.core.Infrastructure.Interfaces;
 using freedom.exchange.api.Data;
 using freedom.exchange.api.Queries.Interfaces;
-using freedom.exchange.api.Requests;
-using freedom.exchange.api.Responses.Models;
+using freedom.exchange.transfer.models.Requests;
+using freedom.exchange.transfer.models.Responses.Models;
 
 using Dapper;
 
@@ -27,12 +27,12 @@ WHERE um.user_id = @UserId and um.message_id = @LastMessageId;",
                     });
 
                 payload = await db.QueryAsync<UserMessage>(
-                    @"SELECT um.id AS Id, um.user_id AS SenderId, um.message_id AS MessageId, um.messaging_group_id AS MessagingGroupId, m.message AS EncryptedMessage, m.utc_sent AS UtcSent, um.utc_deleted AS UtcDeleted
+                    @"SELECT um.id AS Id, um.user_id AS SenderId, um.message_id AS MessageId, um.messaging_group_id AS GroupId, m.message AS EncryptedMessage, m.utc_sent AS UtcSent, um.utc_deleted AS UtcDeleted
 FROM dbo.message m
 JOIN dbo.user_message um ON um.message_id = m.id
 JOIN dbo.messaging_group mg ON mg.id = um.messaging_group_id
 WHERE um.user_id = @UserId
-      AND um.messaging_group_id = @MessagingGroupId
+      AND um.messaging_group_id = @GroupId
       AND m.utc_deleted IS NULL
       AND um.utc_deleted IS NULL
       AND (cast(@sinceWhen as date) IS NULL OR m.utc_sent > @SinceWhen)
@@ -40,7 +40,7 @@ ORDER BY m.utc_sent DESC;",
                     new
                     {
                         request.UserId,
-                        request.MessagingGroupId,
+                        request.GroupId,
                         SinceWhen = sinceWhen
                     });
             }

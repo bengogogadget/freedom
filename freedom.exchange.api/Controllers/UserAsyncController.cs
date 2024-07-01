@@ -1,6 +1,6 @@
 ﻿using freedom.exchange.api.Commands.Interfaces;
-using freedom.exchange.api.Dto;
-using freedom.exchange.api.Responses;
+using freedom.exchange.transfer.models.Requests;
+using freedom.exchange.transfer.models.Responses;
 
 using Microsoft.AspNetCore.Mvc;
 

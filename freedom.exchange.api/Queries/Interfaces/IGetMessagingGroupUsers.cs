@@ -1,10 +1,10 @@
-﻿using freedom.exchange.api.Requests;
-using freedom.exchange.api.Responses.Models;
+﻿using freedom.exchange.transfer.models.Requests;
+using freedom.exchange.transfer.models.Responses.Models;
 
 namespace freedom.exchange.api.Queries.Interfaces
 {
     public interface IGetMessagingGroupUsers
     {
-        public Task<IDictionary<string, IEnumerable<MessagingGroupUser>>> QueryAsync(GetMessagingGroupUsersRequest request);
+        public Task<IDictionary<string, IEnumerable<GroupUser>>> QueryAsync(GetMessagingGroupUsersRequest request);
     }
 }

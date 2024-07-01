@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freedom.exchange.data.model
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bengogogadget.core", "..\bengogogadget.core\bengogogadget.core.csproj", "{088DF531-F7D7-413C-B9C6-EAB08B723244}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "freedom.exchange.transfer.models", "..\freedom.exchange.transfer.models\freedom.exchange.transfer.models.csproj", "{87B6C34B-6611-419E-95F2-0295FB49AF7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{088DF531-F7D7-413C-B9C6-EAB08B723244}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{088DF531-F7D7-413C-B9C6-EAB08B723244}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{088DF531-F7D7-413C-B9C6-EAB08B723244}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87B6C34B-6611-419E-95F2-0295FB49AF7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87B6C34B-6611-419E-95F2-0295FB49AF7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87B6C34B-6611-419E-95F2-0295FB49AF7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87B6C34B-6611-419E-95F2-0295FB49AF7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

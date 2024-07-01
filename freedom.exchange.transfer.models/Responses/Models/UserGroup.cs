@@ -1,6 +1,8 @@
-﻿namespace freedom.exchange.api.Responses.Models
+﻿using System;
+
+namespace freedom.exchange.transfer.models.Responses.Models
 {
-    public class UserMessageGroup
+    public class UserGroup
     {
         public string Id { get; set; }
 

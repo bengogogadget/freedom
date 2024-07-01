@@ -1,6 +1,6 @@
 ﻿using bengogogadget.core.Infrastructure.Interfaces;
 using freedom.exchange.api.Commands.Interfaces;
-using freedom.exchange.api.Requests;
+using freedom.exchange.transfer.models.Requests;
 
 using Dapper;
 

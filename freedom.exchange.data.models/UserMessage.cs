@@ -21,14 +21,14 @@ namespace freedom.exchange.data.models
 
         [Required]
         [Column("message_group_id")]
-        public string MessageGroupId { get; set; }
-
-        [Required]
-        [Column("utc_read")]
-        public DateTime? UtcRead { get; set; }
+        public string GroupId { get; set; }
 
         [Required]
         [Column("utc_deleted")]
         public DateTime? UtcDeleted { get; set; }
+
+        [Required]
+        [Column("utc_read")]
+        public DateTime? UtcRead { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
-namespace freedom.exchange.api.Requests
+namespace freedom.exchange.transfer.models.Requests
 {
     public class UpdateMessageRequest
     {

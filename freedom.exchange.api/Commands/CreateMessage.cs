@@ -1,7 +1,7 @@
 ﻿using bengogogadget.core.Infrastructure.Interfaces;
 using freedom.exchange.api.Commands.Interfaces;
 using freedom.exchange.api.Data;
-using freedom.exchange.api.Dto;
+using freedom.exchange.transfer.models.Requests;
 
 using Dapper;
 
@@ -9,7 +9,7 @@ namespace freedom.exchange.api.Commands
 {
     public class CreateMessage(ISqlConnectionFactory connectionFactory, IDateTimeProvider dateTimeProvider, IUuidGenerator uuidGenerator) : SqlAccessor(connectionFactory), ICreateMessage
     {
-        public async Task<string> ExecuteAsync(CreateUserMessageRequest request)
+        public async Task<string> ExecuteAsync(CreateMessageRequest request)
         {
             string messageId = uuidGenerator.GenerateUuid();
 
@@ -19,21 +19,21 @@ namespace freedom.exchange.api.Commands
                 var userIdsAsync = db.QueryAsync<string>(
                     @"SELECT user_id
 FROM dbo.messaging_group_user
-WHERE messaging_group_id = @MessagingGroupId;",
+WHERE messaging_group_id = @GroupId;",
                     new
                     {
-                        request.MessagingGroupId
+                        request.GroupId
                     });
 
                 result = await db.ExecuteAsync(
                     @"INSERT INTO dbo.message ( id, message, utc_sent, sender_id, messaging_group_id )
-VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
+VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @GroupId );",
                     new {
                         Id = messageId,
                         request.EncryptedMessage,
                         UtcSent = dateTimeProvider.UtcNow,
                         request.SenderId,
-                        request.MessagingGroupId
+                        request.GroupId
                     });
 
                 var executions = new List<Task<int>>();
@@ -41,13 +41,13 @@ VALUES ( @Id, @EncryptedMessage, @UtcSent, @SenderId, @MessagingGroupId );",
                 {
                     executions.Add(db.ExecuteAsync(
                         @"INSERT INTO dbo.user_message ( id, user_id, message_id, messaging_group_id )
-VALUES ( @Id, @UserId, @MessageId, @MessagingGroupId );",
+VALUES ( @Id, @UserId, @MessageId, @GroupId );",
                         new
                         {
                             Id = uuidGenerator.GenerateUuid(),
                             UserId = userId,
                             MessageId = messageId,
-                            request.MessagingGroupId
+                            request.GroupId
                         }));
                 }
 

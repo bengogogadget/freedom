@@ -1,4 +1,4 @@
-﻿namespace freedom.exchange.api.Responses
+﻿namespace freedom.exchange.transfer.models.Responses
 {
     public class CreateUserResponse
     {

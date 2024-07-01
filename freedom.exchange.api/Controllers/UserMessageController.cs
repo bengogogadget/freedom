@@ -1,8 +1,7 @@
 ﻿using freedom.exchange.api.Commands.Interfaces;
 using freedom.exchange.api.Queries.Interfaces;
-using freedom.exchange.api.Requests;
-using freedom.exchange.api.Responses;
-using freedom.exchange.api.Responses.Models;
+using freedom.exchange.transfer.models.Requests;
+using freedom.exchange.transfer.models.Responses;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,7 +15,7 @@ namespace freedom.exchange.api.Controllers
         {
             return new GetUserMessagesResponse
             {
-                Messages = await getUserMessage.QueryAsync(request) ?? Enumerable.Empty<UserMessage>()
+                Messages = await getUserMessage.QueryAsync(request)
             };
         }
 

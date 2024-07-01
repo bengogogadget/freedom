@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace freedom.exchange.api.Requests
+namespace freedom.exchange.transfer.models.Requests
 {
     public class GetUserMessagesRequest
     {
@@ -8,7 +8,7 @@ namespace freedom.exchange.api.Requests
         public string UserId { get; set; }
 
         [FromQuery]
-        public string MessagingGroupId { get; set; }
+        public string GroupId { get; set; }
 
         [FromQuery]
         public string? LastMessageId { get; set; }

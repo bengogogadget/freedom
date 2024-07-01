@@ -25,7 +25,7 @@ namespace freedom.exchange.data.models
 
         [Required]
         [Column("messaging_group_id")]
-        public string MessagingGroupId { get; set; }
+        public string GroupId { get; set; }
 
         [Required]
         [Column("utc_deleted")]

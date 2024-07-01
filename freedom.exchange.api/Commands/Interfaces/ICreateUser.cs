@@ -1,4 +1,4 @@
-﻿using freedom.exchange.api.Dto;
+﻿using freedom.exchange.transfer.models.Requests;
 
 namespace freedom.exchange.api.Commands.Interfaces
 {

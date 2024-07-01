@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace freedom.exchange.api.Dto
+namespace freedom.exchange.transfer.models.Requests
 {
-    public class CreateUserMessageRequest
+    public class CreateMessageRequest
     {
         [FromBody]
         public string EncryptedMessage { get; set; }
@@ -11,6 +11,6 @@ namespace freedom.exchange.api.Dto
         public string SenderId { get; set; }
 
         [FromBody]
-        public string MessagingGroupId { get; set; }
+        public string GroupId { get; set; }
     }
 }

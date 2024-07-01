@@ -1,22 +1,21 @@
 ﻿using freedom.exchange.api.Commands.Interfaces;
-using freedom.exchange.api.Dto;
 using freedom.exchange.api.Queries.Interfaces;
-using freedom.exchange.api.Requests;
-using freedom.exchange.api.Responses;
+using freedom.exchange.transfer.models.Requests;
+using freedom.exchange.transfer.models.Responses;
 
 using Microsoft.AspNetCore.Mvc;
 
 namespace freedom.exchange.api.Controllers
 {
-    [Route("api/message/group")]
+    [Route("api/group")]
     public class MessagingGroupAsyncController(ICreateMessagingGroup createMessagingGroup, IGetMessagingGroupUsers getMessagingGroupUsers) : FeController
     {
         [HttpPost]
-        public async Task<CreateMessagingGroupResponse> Post([FromBody] CreateMessagingGroupRequest request)
+        public async Task<CreateMessagingGroupResponse> Post([FromBody] CreateGroupRequest request)
         {
             return new CreateMessagingGroupResponse
             {
-                MessagingGroupId = await createMessagingGroup.ExecuteAsync(request)
+                GroupId = await createMessagingGroup.ExecuteAsync(request)
             };
         }
 

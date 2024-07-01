@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\bengogogadget.core\bengogogadget.core.csproj" />
     <ProjectReference Include="..\freedom.exchange.data.models\freedom.exchange.data.models.csproj" />
+    <ProjectReference Include="..\freedom.exchange.transfer.models\freedom.exchange.transfer.models.csproj" />
   </ItemGroup>
 
 </Project>

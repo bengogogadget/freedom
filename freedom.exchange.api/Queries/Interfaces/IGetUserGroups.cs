@@ -3,8 +3,8 @@ using freedom.exchange.transfer.models.Responses.Models;
 
 namespace freedom.exchange.api.Queries.Interfaces
 {
-    public interface IGetUserMessages
+    public interface IGetUserGroups
     {
-        Task<IEnumerable<UserMessage>> QueryAsync(GetUserMessagesRequest request);
+        public Task<IEnumerable<UserGroup>> ExecuteAsync(GetUserGroupsRequest request);
     }
 }
